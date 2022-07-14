@@ -33,7 +33,7 @@ class Home extends Component {
   }
 }
 function mapStateToProps({ questions, users, authedUser }) {
-  const answeredQuestions = Object.keys(users[authedUser].answers);
+  const answeredQuestions = Object.keys(users[authedUser] ? users[authedUser].answers : {});
 
   const unansweredQuestions = Object.keys(questions).filter((qid) => {
     const match = answeredQuestions.filter((ansId) => ansId === qid); //need to check if the questions match

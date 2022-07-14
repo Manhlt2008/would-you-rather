@@ -4,8 +4,9 @@ import { Card, Button, FormGroup, Form, Image } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import setAuthedUsers from "../actions/authedUser";
-import { Redirect } from "react-router";
+import { useHistory } from "react-router";
 import logo from '../logo.svg';
+import "../styles/Login.scss";
 
 class Login extends Component {
   state = {
@@ -27,7 +28,7 @@ class Login extends Component {
 
     if (userSelected !== "select") {
       this.props.dispatch(setAuthedUsers(userSelected));
-
+      this.props.history.push("/")
       this.setState(() => ({
         userSelected: "select",
         toHome: true,
@@ -36,12 +37,12 @@ class Login extends Component {
   };
 
   render() {
-    if (this.state.toHome === true) {
-      return <Redirect to="/" />;
-    }
+    // if (this.state.toHome === true) {
+    //   return <Redirect to="/" />;
+    // }
 
     return (
-      <Card className="app-container">
+      <Card className="ctn-login">
         <Card.Title>
           <h2 className="center">Welcome to Would You Rather!</h2>
           <p className="center">Please sign in to use other feature</p>
