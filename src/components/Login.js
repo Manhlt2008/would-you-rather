@@ -43,19 +43,19 @@ class Login extends Component {
 
     return (
       <Card className="ctn-login">
-        <Card.Title>
-          <h2 className="center">Welcome to Would You Rather!</h2>
-          <p className="center">Please sign in to use other feature</p>
-        </Card.Title>
+        <div className="login-header">
+          <h5>Welcome to Would You Rather App!</h5>
+          <p>Please sign in to continue</p>
+        </div>
         <Card.Body>
           <Image width="50%" height="100" src={logo} alt="React image" className="App-logo"/>
-          <h3 className="center">Sign in</h3>
+          {/* <h3 className="title">Sign in</h3> */}
           <Form onSubmit={this.handleSubmit}>
             <FormGroup>
               <Form.Label placeholder="select">
                 <Form.Control as="select" onChange={(e) => this.handleChange(e)}>
                   <option value="select" key="select">
-                    Select User
+                    Select user to login
                   </option>
                   {this.props.users.map((user) => {
                     return (

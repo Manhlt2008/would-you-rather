@@ -1,26 +1,26 @@
 import React, { Component } from "react";
 import { Row, Col, Image, Container } from "react-bootstrap";
 import { connect } from "react-redux";
-
+import "../styles/PageStyle.scss";
 class Leaderboard extends Component {
   render() {
     return (
-      <div>
+      <div className="ctn-leader-boad">
         <Container>
           {this.props.users.map((user) => (
-            <Row key={user.id}>
-              <Col xs={4}>
-                <Image src={user.avatarURL} roundedCircle className="author-image" />
+            <Row key={user.id} className="board-item">
+              <Col xs={3}>
+                <Image src={user.avatarURL} roundedCircle className="board-avatar" />
               </Col>
-              <Col xs={4} className="leader-stats">
+              <Col xs={6} className="board-content">
                 <h4>{user.name}</h4>
                 <br />
-                <p>Answered Questions:{Object.keys(user.answers).length}</p>
-                <p>Created Questions:{Object.keys(user.questions).length}</p>
+                <div className="board-report border-bottom">Answered Questions:<span className="board-score">{Object.keys(user.answers).length}</span></div>
+                <div className="board-report">Created Questions:<span className="board-score">{Object.keys(user.questions).length}</span></div>
               </Col>
-              <Col className="leader-score">
-                <h4>Score</h4>
-                <h2>{user.score}</h2>
+              <Col xs={3} className="board-total-score">
+                <div className="board-total-score-header">Score</div>
+                <div className="board-total-score-number">{user.score}</div>
               </Col>
             </Row>
           ))}

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Tabs, Tab } from "react-bootstrap";
 import { connect } from "react-redux";
 import Questions from "./Questions";
+import "../styles/PageStyle.scss"
 
 class Home extends Component {
   state = {
@@ -15,7 +16,7 @@ class Home extends Component {
   };
   render() {
     return (
-      <div className="container">
+      <div className="container ctn-home">
         <Tabs id="HomePage" activeKey={this.state.answered} onSelect={this.handleTab}>
           <Tab eventKey="answered" title="Answered">
             {this.props.answeredQuestions.map((id) => {

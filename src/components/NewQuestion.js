@@ -41,9 +41,47 @@ class NewQuestion extends Component {
       return <Redirect to="/" />;
     }
     return (
-      <div>
+      <div className="ctn-new-question">
+        <Card.Header>
+            <h4 className="preview-author">Create New Question</h4>
+          </Card.Header>
+          <Card.Body>
+            <p className="question-preview">
+              Complete the question:
+              <br />
+              <strong>would you rather...</strong>
+            </p>
+            <Form onSubmit={this.handleSubmit}>
+              <FormGroup>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Option One Text Here"
+                  value={this.state.text1}
+                  onChange={this.handleChange}
+                />
+                <p className="question-or">OR</p>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Option Two Text Here"
+                  value={this.state.text2}
+                  onChange={this.handleChangenew}
+                />
+                <br />
+                <br />
+              </FormGroup>
+              {this.state.text1 === "" || this.state.text2 === "" ? (
+                <Button type="submit" disabled block>
+                  Submit
+                </Button>
+              ) : (
+                <Button variant="success" block type="submit">
+                  Submit
+                </Button>
+              )}
+            </Form>
+          </Card.Body>
         <Card className="preview-card-question">
-          <Card.Header>
+          {/* <Card.Header>
             <h4 className="preview-author">Create New Question</h4>
           </Card.Header>
           <Card.Body>
@@ -81,7 +119,7 @@ class NewQuestion extends Component {
                 </Button>
               )}
             </Form>
-          </Card.Body>
+          </Card.Body> */}
         </Card>
       </div>
     );

@@ -8,25 +8,27 @@ class Questions extends Component {
   render() {
     const { id } = this.props;
     return (
-      <Card className="preview-card mt-3">
-        <Card.Header>
-          <h4 className="preview-author">{this.props.name.name} asks:</h4>
-        </Card.Header>
-        <Card.Body>
-          <Image src={this.props.name.avatarURL} roundedCircle className="author-image" />
+      <div className="ctn-questions">
+        <Card className="question-card">
+          <Card.Header>
+            <h4 className="question-author">{this.props.name.name} asks:</h4>
+          </Card.Header>
+          <Card.Body>
+            <Image src={this.props.name.avatarURL} roundedCircle className="author-image" />
 
-          <div className="preview-container">
-            <h3>Would you rather</h3>
-            <p>...{this.props.excerpt}...</p>
-            <br />
-            <div className="center">
-              <Link to={`/quesitons/${id}`}>
-                <Button variant="outline-primary">View Polls</Button>
-              </Link>
+            <div className="question-container">
+              <h3>Would you rather</h3>
+              <p>...{this.props.excerpt}...</p>
+              <br />
+              <div className="btn-action">
+                <Link to={`/quesitons/${id}`}>
+                  <Button variant="outline-success">View Polls</Button>
+                </Link>
+              </div>
             </div>
-          </div>
-        </Card.Body>
-      </Card>
+          </Card.Body>
+        </Card>
+      </div>
     );
   }
 }

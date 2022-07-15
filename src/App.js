@@ -13,7 +13,7 @@ import {
   Redirect,
   useLocation,
 } from "react-router-dom";
-import NavHead from "./components/NavHead";
+import TopHeader from "./components/TopHeader";
 import NewQuestion from "./components/NewQuestion";
 import QuestionPreview from "./components/QuestionPreview";
 import FourOFour from "./components/FourOFour";
@@ -39,7 +39,7 @@ const App = ({ authedUser, ...rest }) => {
     <Router>
       <LoadingBar />
       <div className="App">
-        <NavHead />
+        <TopHeader />
         <Switch>
           <Route path="/login" component={Login} />
           <PrivateRoute path="/" authedUser={authedUser} exact component={Home} />
