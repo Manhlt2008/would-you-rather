@@ -10,7 +10,7 @@ class Leaderboard extends Component {
           {this.props.users.map((user) => (
             <Row key={user.id} className="board-item">
               <Col xs={3}>
-                <Image src={user.avatarURL} roundedCircle className="board-avatar" />
+                <Image src={user.avatarURL} className="board-avatar" />
               </Col>
               <Col xs={6} className="board-content">
                 <h4>{user.name}</h4>

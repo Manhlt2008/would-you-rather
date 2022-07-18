@@ -30,9 +30,9 @@ class QuestionPreview extends Component {
     }
 
     return (
-      <div>
+      <div className="ctn-preview-question">
         {!this.props.authedUserAns ? (
-          <Card className="preview-card mt-3">
+          <Card className="preview-card">
             <Card.Header>
               <h4 className="preview-author">{this.props.username.name} asks:</h4>
             </Card.Header>
@@ -85,7 +85,7 @@ class QuestionPreview extends Component {
             </Card.Header>
             <Card.Body>
               <h3>Results:</h3>
-              <Image src={this.props.avatar} roundedCircle className="author-image" />
+              <Image src={this.props.avatar} className="author-image" />
               <div className="preview-container">
                 <div className="card-position">
                   Would you rather {this.props.question[this.props.authedUserAns].text}?
@@ -179,4 +179,4 @@ function mapStateToProps({ users, questions, authedUser }, props) {
   };
 }
 
-export default withRouter(connect(mapStateToProps)(QuestionPreview));
+export default (connect(mapStateToProps)(QuestionPreview));

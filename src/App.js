@@ -44,12 +44,7 @@ const App = ({ authedUser, ...rest }) => {
           <Route path="/login" component={Login} />
           <PrivateRoute path="/" authedUser={authedUser} exact component={Home} />
           <PrivateRoute path="/add" authedUser={authedUser} exact component={NewQuestion} />
-          <PrivateRoute
-            authedUser={authedUser}
-            path="/quesitons/:id"
-            exact
-            component={QuestionPreview}
-          />
+          <PrivateRoute path="/quesitons/:id" authedUser={authedUser} exact component={QuestionPreview} />
           <PrivateRoute authedUser={authedUser} path="/leaderboard" exact component={Leaderboard} />
           <PrivateRoute authedUser={authedUser} path="/404" exact component={FourOFour} />
         </Switch>

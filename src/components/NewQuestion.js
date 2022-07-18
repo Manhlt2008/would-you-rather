@@ -29,7 +29,6 @@ class NewQuestion extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Hello");
     const { text1, text2 } = this.state;
     const { dispatch, authedUser } = this.props;
     dispatch(handleAddQuestion(text1, text2, authedUser));

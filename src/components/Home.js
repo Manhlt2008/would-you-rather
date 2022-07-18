@@ -18,16 +18,17 @@ class Home extends Component {
     return (
       <div className="container ctn-home">
         <Tabs id="HomePage" activeKey={this.state.answered} onSelect={this.handleTab}>
-          <Tab eventKey="answered" title="Answered">
-            {this.props.answeredQuestions.map((id) => {
-              return <Questions id={id} key={id} />;
-            })}
-          </Tab>
-          <Tab eventKey="unanswered" title="Unanswered">
+        <Tab eventKey="unanswered" title="Unanswered Questions">
             {this.props.unansweredQuestions.map((id) => {
               return <Questions id={id} key={id} className="preview-li" />;
             })}
           </Tab>
+          <Tab eventKey="answered" title="Answered Questions">
+            {this.props.answeredQuestions.map((id) => {
+              return <Questions id={id} key={id} />;
+            })}
+          </Tab>
+          
         </Tabs>
       </div>
     );
@@ -37,7 +38,7 @@ function mapStateToProps({ questions, users, authedUser }) {
   const answeredQuestions = Object.keys(users[authedUser] ? users[authedUser].answers : {});
 
   const unansweredQuestions = Object.keys(questions).filter((qid) => {
-    const match = answeredQuestions.filter((ansId) => ansId === qid); //need to check if the questions match
+    const match = answeredQuestions.filter((ansId) => ansId === qid);
     if (match === undefined || match.length === 0) return qid;
     return false;
   });
