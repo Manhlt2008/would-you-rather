@@ -37,10 +37,6 @@ class Login extends Component {
   };
 
   render() {
-    // if (this.state.toHome === true) {
-    //   return <Redirect to="/" />;
-    // }
-
     return (
       <Card className="ctn-login">
         <div className="login-header">
@@ -49,7 +45,6 @@ class Login extends Component {
         </div>
         <Card.Body>
           <Image width="50%" height="100" src={logo} alt="React image" className="App-logo"/>
-          {/* <h3 className="title">Sign in</h3> */}
           <Form onSubmit={this.handleSubmit}>
             <FormGroup>
               <Form.Label placeholder="select">
@@ -67,7 +62,7 @@ class Login extends Component {
                 </Form.Control>
               </Form.Label>
             </FormGroup>
-            <Button type="submit">Sign In</Button>
+            <Button type="submit" variant="success">Sign In</Button>
           </Form>
         </Card.Body>
       </Card>
@@ -78,7 +73,6 @@ class Login extends Component {
 function mapStateToProps({ users }) {
   const userIds = Object.keys(users);
   const myUsers = userIds.map((id) => ({
-    //id here is the loop number iteration
     id: users[id].id,
     name: users[id].name,
   }));

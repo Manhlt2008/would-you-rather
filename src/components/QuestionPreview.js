@@ -25,45 +25,38 @@ class QuestionPreview extends Component {
   };
 
   render() {
-    if (this.props.validId === "false") {
+    if (this.props.validId === false) {
       return <Redirect to="/404" />;
     }
 
     return (
       <div className="ctn-preview-question">
         {!this.props.authedUserAns ? (
-          <Card className="preview-card">
+          <Card>
             <Card.Header>
-              <h4 className="preview-author">{this.props.username.name} asks:</h4>
+              <div className="preview-author">{this.props.username.name} asks:</div>
             </Card.Header>
             <Card.Body>
-              <Image src={this.props.avatar} roundedCircle className="author-image" />
+              <Image src={this.props.avatar} className="preview-image" />
               <div className="preview-container-card">
-                <h3>Would you rather...</h3>
+                <div className="title">Would you rather...</div>
                 <br />
                 <Form onSubmit={(e) => this.handleSubmit(e)}>
                   <FormGroup>
-                    <strong>
-                      <Form.Check
-                        type="radio"
-                        id="optionOne"
-                        name="radioselect"
-                        label={this.props.optionOne}
-                        onChange={(e) => this.handleChange(e)}
-                      />
-                    </strong>
-                    <p className="preview-author mt-3">OR</p>
-                    <strong>
-                      <Form.Check
-                        type="radio"
-                        id="optionTwo"
-                        name="radioselect"
-                        label={this.props.optionTwo}
-                        onChange={(e) => this.handleChange(e)}
-                      />
-                    </strong>
-                    <br />
-                    <br />
+                    <Form.Check
+                      type="radio"
+                      id="optionOne"
+                      name="radioselect"
+                      label={this.props.optionOne}
+                      onChange={(e) => this.handleChange(e)}
+                    />
+                    <Form.Check
+                      type="radio"
+                      id="optionTwo"
+                      name="radioselect"
+                      label={this.props.optionTwo}
+                      onChange={(e) => this.handleChange(e)}
+                    />
                   </FormGroup>
                   {this.state.answerSelected === null ? (
                     <Button variant="success" block disabled type="submit">
@@ -79,14 +72,14 @@ class QuestionPreview extends Component {
             </Card.Body>
           </Card>
         ) : (
-          <Card className="preview-card mt-4">
+          <Card className="preview-card">
             <Card.Header>
               <h4 className="preview-author">Asked by {this.props.username.name}</h4>
             </Card.Header>
             <Card.Body>
               <h3>Results:</h3>
-              <Image src={this.props.avatar} className="author-image" />
-              <div className="preview-container">
+              <Image src={this.props.avatar} className="preview-image" />
+              <div className="preview-container-card">
                 <div className="card-position">
                   Would you rather {this.props.question[this.props.authedUserAns].text}?
                   {this.props.authedUserAns === "optionOne" ? (
@@ -95,7 +88,7 @@ class QuestionPreview extends Component {
                         now={(this.props.optionOneVote / this.props.votes) * 100}
                         className="progress-template"
                       />
-                      {this.props.optionOneVote} out of {this.props.votes} votes
+                      <h5>{this.props.optionOneVote} out of {this.props.votes} votes</h5>
                     </Fragment>
                   ) : (
                     <Fragment>
@@ -103,11 +96,9 @@ class QuestionPreview extends Component {
                         now={(this.props.optionTwoVote / this.props.votes) * 100}
                         className="progress-template"
                       />
-                      {this.props.optionTwoVote} out of {this.props.votes} votes
+                      <h5>{this.props.optionTwoVote} out of {this.props.votes} votes</h5>
                     </Fragment>
                   )}
-                  <br />
-                  <br />
                   Would you rather{" "}
                   {this.props.authedUserAns === "optionOne"
                     ? this.props.question.optionTwo.text
@@ -119,7 +110,7 @@ class QuestionPreview extends Component {
                         now={(this.props.optionOneVote / this.props.votes) * 100}
                         className="progress-template"
                       />
-                      {this.props.optionOneVote} out of {this.props.votes} votes
+                      <h5>{this.props.optionOneVote} out of {this.props.votes} votes</h5>
                     </Fragment>
                   ) : (
                     <Fragment>
@@ -127,7 +118,7 @@ class QuestionPreview extends Component {
                         now={(this.props.optionTwoVote / this.props.votes) * 100}
                         className="progress-template"
                       />
-                      {this.props.optionTwoVote} out of {this.props.votes} votes
+                      <h5>{this.props.optionTwoVote} out of {this.props.votes} votes</h5>
                     </Fragment>
                   )}
                 </div>
@@ -179,4 +170,4 @@ function mapStateToProps({ users, questions, authedUser }, props) {
   };
 }
 
-export default (connect(mapStateToProps)(QuestionPreview));
+export default connect(mapStateToProps)(QuestionPreview);

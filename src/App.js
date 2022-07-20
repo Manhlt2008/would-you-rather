@@ -10,16 +10,11 @@ import {
   Switch,
   useHistory,
   withRouter,
-  Redirect,
-  useLocation,
 } from "react-router-dom";
 import TopHeader from "./components/TopHeader";
 import NewQuestion from "./components/NewQuestion";
 import QuestionPreview from "./components/QuestionPreview";
-import FourOFour from "./components/FourOFour";
 import Leaderboard from "./components/Leaderboard";
-import LoadingBar from "react-redux-loading";
-import setAuthedUsers from "./actions/authedUser";
 
 function PrivateRoute({ component: Component, authedUser, location, ...rest }) {
   const history = useHistory();
@@ -30,6 +25,14 @@ function PrivateRoute({ component: Component, authedUser, location, ...rest }) {
 
   return <Route {...rest} render={(props) => <Component {...props} />} />;
 }
+
+
+const FF = () => {
+  return <div>
+    404
+  </div>
+}
+
 const App = ({ authedUser, ...rest }) => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -37,7 +40,6 @@ const App = ({ authedUser, ...rest }) => {
   }, []);
   return (
     <Router>
-      <LoadingBar />
       <div className="App">
         <TopHeader />
         <Switch>
@@ -46,7 +48,7 @@ const App = ({ authedUser, ...rest }) => {
           <PrivateRoute path="/add" authedUser={authedUser} exact component={NewQuestion} />
           <PrivateRoute path="/quesitons/:id" authedUser={authedUser} exact component={QuestionPreview} />
           <PrivateRoute authedUser={authedUser} path="/leaderboard" exact component={Leaderboard} />
-          <PrivateRoute authedUser={authedUser} path="/404" exact component={FourOFour} />
+          <Route  path="/404"  component={FF} />
         </Switch>
       </div>
     </Router>

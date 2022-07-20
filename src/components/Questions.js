@@ -45,8 +45,8 @@ function mapStateToProps({ questions, users, authedUser }, props) {
 
   const question = questions[userId];
   const excerpt =
-    question.optionOne.text.length > 13
-      ? question.optionOne.text.substring(0, 14)
+    question.optionOne.text.length > 30
+      ? question.optionOne.text.substring(0, 29)
       : question.optionOne.text;
 
   return {

@@ -15,9 +15,10 @@
         text-decoration: none;
         padding: 10px;
         color: #000;
-        border-radius:40% 40% 0px 0px ;
+        //border-radius:40% 40% 0px 0px ;
         &:hover{
           background: #07c2ac;
+          color: #fff;
         }
       }
     }
@@ -154,4 +155,30 @@
   border: 1px solid #cecece;
   border-radius: 3px;
   margin: 0 auto;
+  .preview-author{
+    font-weight: 600;
+    text-align: left;
+  }
+  .preview-image{
+    float: left;
+    width: 160px;
+    margin-right: 10px;
+  }
+  .preview-container-card{
+    float: left;
+    padding: 10px;
+    text-align: left;
+    border-left: 2px solid #cecece;
+    width: calc(100% - 180px);
+    .title{
+      font-weight: 700;
+    }
+    .form-check-input:checked{
+      background-color: #157347;
+      border-color: #157347;
+    }
+  }
+  .progress-bar{
+    background-color: #0cd362;
+  }
 }
