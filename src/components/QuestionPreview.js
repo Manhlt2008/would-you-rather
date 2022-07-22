@@ -1,135 +1,138 @@
-import React, { Component, Fragment } from "react";
-import { connect } from "react-redux";
+import React, { Component, Fragment, useState, useEffect } from "react";
+import { connect, useDispatch } from "react-redux";
 import { Image } from "react-bootstrap";
 import { ProgressBar, Card, Form, Button, FormGroup } from "react-bootstrap";
-import { Redirect, withRouter } from "react-router";
 import { handleAddQuestionAnswer } from "../actions/questions";
+import { useHistory } from "react-router-dom";
 
-class QuestionPreview extends Component {
-  state = {
-    answerSelected: null,
-  };
-  handleChange = (e) => {
+const QuestionPreview = ({ username = { name: "" }, ...props }) => {
+  const [answerSelected, setAnswerSelected] = useState(null);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const handleChange = (e) => {
     const answerSelected = e.target.id;
-    this.setState(() => ({
-      answerSelected,
-    }));
+    setAnswerSelected(answerSelected);
   };
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const { dispatch, authedUser, question } = this.props;
-    const { answerSelected } = this.state;
+    const { authedUser, question } = props;
     const qid = question.id;
     dispatch(handleAddQuestionAnswer(authedUser, qid, answerSelected));
   };
-
-  render() {
-    if (this.props.validId === false) {
-      return <Redirect to="/404" />;
+  useEffect(() => {
+    if (props.validId === false) {
+      history.push("/login");
     }
-
-    return (
-      <div className="ctn-preview-question">
-        {!this.props.authedUserAns ? (
-          <Card>
-            <Card.Header>
-              <div className="preview-author">{this.props.username.name} asks:</div>
-            </Card.Header>
-            <Card.Body>
-              <Image src={this.props.avatar} className="preview-image" />
-              <div className="preview-container-card">
-                <div className="title">Would you rather...</div>
-                <br />
-                <Form onSubmit={(e) => this.handleSubmit(e)}>
-                  <FormGroup>
-                    <Form.Check
-                      type="radio"
-                      id="optionOne"
-                      name="radioselect"
-                      label={this.props.optionOne}
-                      onChange={(e) => this.handleChange(e)}
+  }, []);
+  return (
+    <div className="ctn-preview-question">
+      {!props.authedUserAns ? (
+        <Card>
+          <Card.Header>
+            <div className="preview-author">{username.name} asks:</div>
+          </Card.Header>
+          <Card.Body>
+            <Image src={props.avatar} className="preview-image" />
+            <div className="preview-container-card">
+              <div className="title">Would you rather...</div>
+              <br />
+              <Form onSubmit={(e) => handleSubmit(e)}>
+                <FormGroup>
+                  <Form.Check
+                    type="radio"
+                    id="optionOne"
+                    name="radioselect"
+                    label={props.optionOne}
+                    onChange={(e) => handleChange(e)}
+                  />
+                  <Form.Check
+                    type="radio"
+                    id="optionTwo"
+                    name="radioselect"
+                    label={props.optionTwo}
+                    onChange={(e) => handleChange(e)}
+                  />
+                </FormGroup>
+                {answerSelected === null ? (
+                  <Button variant="success" block disabled type="submit">
+                    Submit
+                  </Button>
+                ) : (
+                  <Button variant="success" block type="submit">
+                    Submit
+                  </Button>
+                )}
+              </Form>
+            </div>
+          </Card.Body>
+        </Card>
+      ) : (
+        <Card className="preview-card">
+          <Card.Header>
+            <h4 className="preview-author">Asked by {username.name}</h4>
+          </Card.Header>
+          <Card.Body>
+            <h3>Results:</h3>
+            <Image src={props.avatar} className="preview-image" />
+            <div className="preview-container-card">
+              <div className="card-position">
+                Would you rather {props.question[props.authedUserAns].text}?
+                {props.authedUserAns === "optionOne" ? (
+                  <Fragment>
+                    <ProgressBar
+                      now={(props.optionOneVote / props.votes) * 100}
+                      className="progress-template"
                     />
-                    <Form.Check
-                      type="radio"
-                      id="optionTwo"
-                      name="radioselect"
-                      label={this.props.optionTwo}
-                      onChange={(e) => this.handleChange(e)}
+                    <h5>
+                      {props.optionOneVote} out of {props.votes} votes
+                    </h5>
+                  </Fragment>
+                ) : (
+                  <Fragment>
+                    <ProgressBar
+                      now={(props.optionTwoVote / props.votes) * 100}
+                      className="progress-template"
                     />
-                  </FormGroup>
-                  {this.state.answerSelected === null ? (
-                    <Button variant="success" block disabled type="submit">
-                      Submit
-                    </Button>
-                  ) : (
-                    <Button variant="success" block type="submit">
-                      Submit
-                    </Button>
-                  )}
-                </Form>
+                    <h5>
+                      {props.optionTwoVote} out of {props.votes} votes
+                    </h5>
+                  </Fragment>
+                )}
+                Would you rather{" "}
+                {props.authedUserAns === "optionOne"
+                  ? props.question.optionTwo.text
+                  : props.question.optionOne.text}
+                ?
+                {props.authedUserAns === "optionTwo" ? (
+                  <Fragment>
+                    <ProgressBar
+                      now={(props.optionOneVote / props.votes) * 100}
+                      className="progress-template"
+                    />
+                    <h5>
+                      {props.optionOneVote} out of {props.votes} votes
+                    </h5>
+                  </Fragment>
+                ) : (
+                  <Fragment>
+                    <ProgressBar
+                      now={(props.optionTwoVote / props.votes) * 100}
+                      className="progress-template"
+                    />
+                    <h5>
+                      {props.optionTwoVote} out of {props.votes} votes
+                    </h5>
+                  </Fragment>
+                )}
               </div>
-            </Card.Body>
-          </Card>
-        ) : (
-          <Card className="preview-card">
-            <Card.Header>
-              <h4 className="preview-author">Asked by {this.props.username.name}</h4>
-            </Card.Header>
-            <Card.Body>
-              <h3>Results:</h3>
-              <Image src={this.props.avatar} className="preview-image" />
-              <div className="preview-container-card">
-                <div className="card-position">
-                  Would you rather {this.props.question[this.props.authedUserAns].text}?
-                  {this.props.authedUserAns === "optionOne" ? (
-                    <Fragment>
-                      <ProgressBar
-                        now={(this.props.optionOneVote / this.props.votes) * 100}
-                        className="progress-template"
-                      />
-                      <h5>{this.props.optionOneVote} out of {this.props.votes} votes</h5>
-                    </Fragment>
-                  ) : (
-                    <Fragment>
-                      <ProgressBar
-                        now={(this.props.optionTwoVote / this.props.votes) * 100}
-                        className="progress-template"
-                      />
-                      <h5>{this.props.optionTwoVote} out of {this.props.votes} votes</h5>
-                    </Fragment>
-                  )}
-                  Would you rather{" "}
-                  {this.props.authedUserAns === "optionOne"
-                    ? this.props.question.optionTwo.text
-                    : this.props.question.optionOne.text}
-                  ?
-                  {this.props.authedUserAns === "optionTwo" ? (
-                    <Fragment>
-                      <ProgressBar
-                        now={(this.props.optionOneVote / this.props.votes) * 100}
-                        className="progress-template"
-                      />
-                      <h5>{this.props.optionOneVote} out of {this.props.votes} votes</h5>
-                    </Fragment>
-                  ) : (
-                    <Fragment>
-                      <ProgressBar
-                        now={(this.props.optionTwoVote / this.props.votes) * 100}
-                        className="progress-template"
-                      />
-                      <h5>{this.props.optionTwoVote} out of {this.props.votes} votes</h5>
-                    </Fragment>
-                  )}
-                </div>
-              </div>
-            </Card.Body>
-          </Card>
-        )}
-      </div>
-    );
-  }
-}
+            </div>
+          </Card.Body>
+        </Card>
+      )}
+    </div>
+  );
+};
 function mapStateToProps({ users, questions, authedUser }, props) {
   let userId = null;
   if (props.id) {
