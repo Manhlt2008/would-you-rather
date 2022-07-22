@@ -15,6 +15,7 @@ import TopHeader from "./components/TopHeader";
 import NewQuestion from "./components/NewQuestion";
 import QuestionPreview from "./components/QuestionPreview";
 import Leaderboard from "./components/Leaderboard";
+import NotFound from "./components/NotFound";
 
 function PrivateRoute({ component: Component, authedUser, location, ...rest }) {
   const history = useHistory();
@@ -48,7 +49,7 @@ const App = ({ authedUser, ...rest }) => {
           <PrivateRoute path="/add" authedUser={authedUser} exact component={NewQuestion} />
           <PrivateRoute path="/quesitons/:id" authedUser={authedUser} exact component={QuestionPreview} />
           <PrivateRoute authedUser={authedUser} path="/leaderboard" exact component={Leaderboard} />
-          <Route  path="/404"  component={FF} />
+          <Route  path="/404"  component={NotFound} />
         </Switch>
       </div>
     </Router>
