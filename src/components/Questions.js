@@ -9,7 +9,6 @@ const Questions = ({ id, name = {name: "",avatarURL: "" }, excerpt }) => {
   const handleRoute = (id) => {
     history.push(`/quesitons/${id}`);
   };
-  console.log(excerpt);
   return (
     <div className="ctn-questions">
       <Card className="question-card">

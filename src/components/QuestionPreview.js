@@ -6,6 +6,7 @@ import { handleAddQuestionAnswer } from "../actions/questions";
 import { useHistory } from "react-router-dom";
 
 const QuestionPreview = ({ username = { name: "" }, ...props }) => {
+  //console.log(props);
   const [answerSelected, setAnswerSelected] = useState(null);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -21,8 +22,12 @@ const QuestionPreview = ({ username = { name: "" }, ...props }) => {
     dispatch(handleAddQuestionAnswer(authedUser, qid, answerSelected));
   };
   useEffect(() => {
+    console.log("useEffect");
     if (props.validId === false) {
-      history.push("/login");
+      history.push({
+        pathname: "/login",
+        state: { urlPrevious: "/404" },
+      });
     }
   }, []);
   return (
@@ -135,6 +140,7 @@ const QuestionPreview = ({ username = { name: "" }, ...props }) => {
 };
 function mapStateToProps({ users, questions, authedUser }, props) {
   let userId = null;
+  console.log("mapStateToProps");
   if (props.id) {
     userId = props.id;
   } else {
@@ -152,7 +158,7 @@ function mapStateToProps({ users, questions, authedUser }, props) {
   const avatar = users[question.author].avatarURL;
   let authedUserAns = null;
 
-  authedUserAns = users[authedUser].answers[question.id];
+  authedUserAns = users[authedUser] ? users[authedUser].answers[question.id] : null;
 
   const optionOneVote = question.optionOne.votes.length;
   const optionTwoVote = question.optionTwo.votes.length;

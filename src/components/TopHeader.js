@@ -1,48 +1,47 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { Image } from "react-bootstrap";
 import setAuthedUsers from "../actions/authedUser";
 import "../styles/PageStyle.scss";
-
-class TopHeader extends Component {
-  state = {
-    user: true,
-  };
-
-  handleLogout = () => {
-    const { dispatch } = this.props;
+import { useHistory } from "react-router-dom";
+const TopHeader = ({ authUsername, authUserAvatar }) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const handleLogout = () => {
     dispatch(setAuthedUsers(null));
+    history.push({
+      pathname: "/login",
+      state: { urlPrevious: "/" },
+    });
   };
-  render() {
-    return (
-      <div className="ctn-top-header">
-        <div className="menu">
-          <div className="menu-item">
-            <Link to="/">Home</Link>
-          </div>
-          <div className="menu-item">
-            <Link to="/add">New Question</Link>
-          </div>
-          <div className="menu-item">
-            <Link to="/leaderboard">Leader Board</Link>
-          </div>
+  return (
+    <div className="ctn-top-header">
+      <div className="menu">
+        <div className="menu-item">
+          <Link to="/">Home</Link>
         </div>
-        
-        <button className="button-logout menu-item" onClick={() => this.handleLogout()}>
-          {this.props.authUsername ? "Logout" : "Login"}
-        </button>
-        {this.props.authUserAvatar && (
-          <div className="user-info">
-            <strong>Welcome,</strong> {this.props.authUsername}
-            <Image src={this.props.authUserAvatar} circle="true" className="avatar" />
-          </div>
-        )}
+        <div className="menu-item">
+          <Link to="/add">New Question</Link>
+        </div>
+        <div className="menu-item">
+          <Link to="/leaderboard">Leader Board</Link>
+        </div>
       </div>
-    );
-  }
-}
+
+      <button className="button-logout menu-item" onClick={() => handleLogout()}>
+        {authUsername ? "Logout" : "Login"}
+      </button>
+      {authUserAvatar && (
+        <div className="user-info">
+          <strong>Welcome,</strong> {authUsername}
+          <Image src={authUserAvatar} circle="true" className="avatar" />
+        </div>
+      )}
+    </div>
+  );
+};
 
 function mapStateToProps({ authedUser, users }) {
   let authUsername = null;
